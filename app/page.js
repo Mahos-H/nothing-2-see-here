@@ -5,13 +5,8 @@ import { useState, useRef, useEffect } from 'react';
 // 1. Define all 3 videos independently
 const ALL_VIDEOS = [
   "/s.mp4",
-  "/x.mp4",
-  "/a.mp4",
-  "/b.mp4",
-  "/c.mp4",
-  "/d.mp4",
+  "/y.mp4",
   "/e.mp4",
-  "/f.mp4",
   "/g.mp4"
 ];
 
@@ -58,12 +53,18 @@ export default function Home() {
     // to get a valid index for the content arrays.
     
     // Determine the video index:
-    const videoIndex = currentTime % ALL_VIDEOS.length;
-    
-    // Determine the text index:
-    // We can use a slight offset (e.g., divide by 1000 to get seconds, or add an offset)
-    // to ensure the text and video are usually different even though they're both time-based.
-    // Here, we'll use a slightly different time base (e.g., current seconds) for the text index.
+    // 1. Generate a uniform random number between 0 and 1
+    const randomNum = Math.random(); // uniform distribution in [0, 1)
+
+    // 2. If randomNum < 0.5, always pick "s.mp4"; otherwise use time-based selection
+    let videoIndex;
+    if (randomNum < 0.9) {
+      videoIndex = ALL_VIDEOS.indexOf("/y.mp4"); // or simply 0 if s.mp4 is first
+    } else {
+      videoIndex = currentTime % ALL_VIDEOS.length;
+    }
+
+
     const currentSeconds = Math.floor(currentTime / 1000); 
     const textIndex = currentSeconds % ALL_TEXTS.length;
 
